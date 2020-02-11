@@ -1,0 +1,32 @@
+
+html, body {
+	height: 100%;
+	background-color: black;
+}
+
+h1, h2 {
+	font-family: 'Press Start 2P', cursive;
+	padding: 5px;
+	color: white;
+}
+h2 {
+	text-align: center;
+	margin-top: 10%;
+	padding-bottom: 20px;
+}
+table {
+	margin: auto;
+}
+td {
+	font-family: 'Press Start 2P', cursive;
+	background-color: rgba(15, 13, 11, 0.58);
+	padding: 20px;
+}
+a {
+	text-decoration: none;
+	color: lime
+}
+td:hover {
+	background-color: rgba(193, 236, 194, 0.57);
+	color: lime;
+}
