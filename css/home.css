@@ -6,7 +6,8 @@ html, body {
 
 h1, h2 {
 	font-family: 'Press Start 2P', cursive;
-	padding: 5px;
+	padding: 10px;
+	padding-bottom: 3px;
 	color: white;
 }
 h2 {
@@ -20,13 +21,17 @@ table {
 td {
 	font-family: 'Press Start 2P', cursive;
 	background-color: rgba(15, 13, 11, 0.58);
-	padding: 20px;
+	padding: 15px;
 }
 a {
 	text-decoration: none;
-	color: lime
+	color: lime;
+	padding: 20px;
 }
 td:hover {
 	background-color: rgba(193, 236, 194, 0.57);
 	color: lime;
 }
+
+
+
