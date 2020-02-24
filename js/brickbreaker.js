@@ -6,22 +6,27 @@
 
 
 ///////////////////// APP STATE (VARIABLES) /////////////////////////
-
+let gameStarted = false;
 
 
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 let canvas = document.getElementById('canvas');
-//let playButton = document.getElementById('playButton');
 let ctx = canvas.getContext('2d');
 let body = document.querySelector('body');
 
-
+let paddle = {
+    x: (canvas.width / 2) - 50,
+    y: canvas.height - 40,
+    width: 100,
+    height: 20,
+    movement: 1
+};
 
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
 window.onload = init;
-
+document.addEventListener('keydown', getArrows);
 
 
 // Listen for mouse moves
@@ -87,10 +92,29 @@ function init() {
 }
 
 function game() {
+	gameStarted = true;
 	playButton.remove('play-button');
-	
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.strokeStyle = 'lime';
+	ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
+
+
+	setTimeout(game, 20);
 
 }
 
+function getArrows() {
+	if (gameStarted) {
+		if (event.keyCode == 37) {
+			//movePaddle();
+			console.log("rats r cool");
+		}
+		else if (event.keyCode == 39) {
+			//movePaddle();
+			console.log("rats r cool");
+		}
+	}
+	
+}
 
 
