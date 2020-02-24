@@ -23,6 +23,7 @@ let body = document.querySelector('body');
 window.onload = init;
 
 
+
 // Listen for mouse moves
 // canvas.addEventListener('mousemove', function(event) {
 //   // Check whether point is inside circle
@@ -63,17 +64,17 @@ window.onload = init;
 ///////////////////// FUNCTIONS /////////////////////////////////////
 
 function init() {
-	let playAgain = document.createElement('canvas');
-	let ctx2 = playAgain.getContext('2d');
-	playAgain.className = 'play-again';
-	body.append(playAgain);
+	playButton = document.createElement('canvas');
+	let ctx2 = playButton.getContext('2d');
+	playButton.className = 'play-button';
+	body.append(playButton);
 	ctx2.fillStyle = 'lime';
-	ctx2.fillRect(0, 0, playAgain.width, playAgain.height);
+	ctx2.fillRect(0, 0, playButton.width, playButton.height);
 	ctx2.font = '40px PressStart2P';
  	ctx2.fillStyle = 'black';
- 	ctx2.fillText('Play', playAgain.width/2 - 77, playAgain.height/2 + 20);
+ 	ctx2.fillText('Play', playButton.width/2 - 77, playButton.height/2 + 20);
 
-
+ 	playButton.onclick = game;
 
 	// playButton = new Path2D();
 	// playButton.rect(canvas.width/2 - 100, canvas.height/2 - 50, 200, 100);
@@ -83,10 +84,13 @@ function init() {
 	// ctx.fillStyle = 'black';
 	// ctx.fillText('Play', canvas.width/2 - 77, canvas.height/2 + 20);
 
+}
+
+function game() {
+	playButton.remove('play-button');
 	
 
 }
-
 
 
 
