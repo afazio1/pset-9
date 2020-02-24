@@ -11,8 +11,10 @@
 
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 let canvas = document.getElementById('canvas');
-let playButton = document.getElementById('playButton');
+//let playButton = document.getElementById('playButton');
 let ctx = canvas.getContext('2d');
+let body = document.querySelector('body');
+
 
 
 
@@ -61,7 +63,18 @@ window.onload = init;
 ///////////////////// FUNCTIONS /////////////////////////////////////
 
 function init() {
-	
+	let playAgain = document.createElement('canvas');
+	let ctx2 = playAgain.getContext('2d');
+	playAgain.className = 'play-again';
+	body.append(playAgain);
+	ctx2.fillStyle = 'lime';
+	ctx2.fillRect(0, 0, playAgain.width, playAgain.height);
+	ctx2.font = '40px PressStart2P';
+ 	ctx2.fillStyle = 'black';
+ 	ctx2.fillText('Play', playAgain.width/2 - 77, playAgain.height/2 + 20);
+
+
+
 	// playButton = new Path2D();
 	// playButton.rect(canvas.width/2 - 100, canvas.height/2 - 50, 200, 100);
 	// ctx.fillStyle = 'lime';
