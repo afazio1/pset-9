@@ -150,9 +150,13 @@ function getArrows() {
 
 function moveBall() {
 	if (gameStarted) {
-		if ((ball.y !== paddle.y - 10) && (ball.x !== paddle.y - 10)) {
+		console.log(ball);
+		console.log(paddle);
+		if ((ball.y !== paddle.y - 10) && (ball.x !== paddle.x - 10)) {
 			ball.y++;
-			
+		}
+		else {
+			ball.y--;
 		}
 	}
 }
