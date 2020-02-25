@@ -10,6 +10,8 @@ let gameStarted = false;
 
 
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
+
+let font;
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let body = document.querySelector('body');
@@ -21,11 +23,15 @@ let paddle = {
     height: 20,
     movement: 1
 };
-
+let ball = {
+	x: (canvas.width / 2),
+    y: canvas.height - 70,
+    radius: 10 
+};
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
-window.onload = init;
+window.onload = startup;
 document.addEventListener('keydown', getArrows);
 
 
@@ -68,6 +74,19 @@ document.addEventListener('keydown', getArrows);
 
 ///////////////////// FUNCTIONS /////////////////////////////////////
 
+//loads the font
+async function startup() {
+	font = new FontFace(
+		"PressStart2P",
+		"url(css/PressStart2P.ttf)"
+	);
+
+	await font.load();
+	document.fonts.add(font);
+
+	init();
+}
+
 function init() {
 	playButton = document.createElement('canvas');
 	let ctx2 = playButton.getContext('2d');
@@ -94,11 +113,18 @@ function init() {
 function game() {
 	gameStarted = true;
 	playButton.remove('play-button');
+
+	//create a paddle
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.strokeStyle = 'lime';
 	ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
 
-
+	//create a ball
+	ctx.beginPath();
+	ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+	ctx.strokeStyle = 'lime';
+	ctx.stroke();
+	moveBall();
 	setTimeout(game, 20);
 
 }
@@ -120,6 +146,15 @@ function getArrows() {
 			}
 		}
 	}	
+}
+
+function moveBall() {
+	if (gameStarted) {
+		if ((ball.y !== paddle.y - 10) && (ball.x !== paddle.y - 10)) {
+			ball.y++;
+			
+		}
+	}
 }
 
 
