@@ -105,16 +105,21 @@ function game() {
 
 function getArrows() {
 	if (gameStarted) {
-		if (event.keyCode == 37) {
-			//movePaddle();
-			console.log("rats r cool");
+		if (event.keyCode === 37) { //left arrow key
+			if (paddle.x !== 10) {
+				paddle.x -= 30;
+				ctx.strokeStyle = 'lime';
+				ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
+			}
 		}
-		else if (event.keyCode == 39) {
-			//movePaddle();
-			console.log("rats r cool");
+		else if (event.keyCode === 39) { //right arrow key
+			if (paddle.x !== 790) {
+				paddle.x += 30;
+				ctx.strokeStyle = 'lime';
+				ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
+			}
 		}
-	}
-	
+	}	
 }
 
 
