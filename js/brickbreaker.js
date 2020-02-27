@@ -6,8 +6,8 @@
 
 
 ///////////////////// APP STATE (VARIABLES) /////////////////////////
-let gameStarted = false;
-
+let gameStarted;
+let go = 0;
 
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 
@@ -15,19 +15,8 @@ let font;
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let body = document.querySelector('body');
-
-let paddle = {
-    x: (canvas.width / 2) - 50,
-    y: canvas.height - 40,
-    width: 100,
-    height: 20,
-    movement: 1
-};
-let ball = {
-	x: (canvas.width / 2),
-    y: canvas.height - 70,
-    radius: 10 
-};
+let paddle;
+let ball;
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
@@ -88,15 +77,33 @@ async function startup() {
 }
 
 function init() {
-	playButton = document.createElement('canvas');
-	let ctx2 = playButton.getContext('2d');
-	playButton.className = 'play-button';
-	body.append(playButton);
-	ctx2.fillStyle = 'lime';
-	ctx2.fillRect(0, 0, playButton.width, playButton.height);
-	ctx2.font = '40px PressStart2P';
- 	ctx2.fillStyle = 'black';
- 	ctx2.fillText('Play', playButton.width/2 - 77, playButton.height/2 + 20);
+	go++;
+	gameStarted = false;
+	paddle = {
+	    x: (canvas.width / 2) - 50,
+	    y: canvas.height - 40,
+	    width: 100,
+	    height: 20,
+	    movement: 1
+	};
+	ball = {
+		x: (canvas.width / 2),
+	    y: canvas.height - 70,
+	    radius: 10,
+	    up: false 
+	};
+	if (go <= 1) {
+		playButton = document.createElement('canvas');
+		let ctx2 = playButton.getContext('2d');
+		playButton.className = 'play-button';
+		body.append(playButton);
+		ctx2.fillStyle = 'lime';
+		ctx2.fillRect(0, 0, playButton.width, playButton.height);
+		ctx2.font = '40px PressStart2P';
+	 	ctx2.fillStyle = 'black';
+	 	ctx2.fillText('Play', playButton.width/2 - 77, playButton.height/2 + 20);
+	}
+	
 
  	playButton.onclick = game;
 
@@ -116,15 +123,18 @@ function game() {
 
 	//create a paddle
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.strokeStyle = 'lime';
-	ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
+	ctx.fillStyle = '#12990e';
+	ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
 
 	//create a ball
 	ctx.beginPath();
 	ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-	ctx.strokeStyle = 'lime';
-	ctx.stroke();
-	moveBall();
+	ctx.fillStyle = 'gray';
+	ctx.fill();
+	
+	checkHit();
+	changeDirection();
+	
 	setTimeout(game, 20);
 
 }
@@ -132,15 +142,15 @@ function game() {
 function getArrows() {
 	if (gameStarted) {
 		if (event.keyCode === 37) { //left arrow key
-			if (paddle.x !== 10) {
-				paddle.x -= 30;
+			if (paddle.x >= 40) {
+				paddle.x -= 20;
 				ctx.strokeStyle = 'lime';
 				ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
 			}
 		}
 		else if (event.keyCode === 39) { //right arrow key
-			if (paddle.x !== 790) {
-				paddle.x += 30;
+			if (paddle.x + paddle.width <= canvas.width) {
+				paddle.x += 40;
 				ctx.strokeStyle = 'lime';
 				ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
 			}
@@ -148,16 +158,34 @@ function getArrows() {
 	}	
 }
 
-function moveBall() {
-	if (gameStarted) {
-		console.log(ball);
-		console.log(paddle);
-		if ((ball.y !== paddle.y - 10) && (ball.x !== paddle.x - 10)) {
-			ball.y++;
-		}
-		else {
-			ball.y--;
-		}
+function changeDirection() {
+	if (ball.up) {
+		ball.y -= 5;
+
+	}
+	else if (ball.up === false) {
+		ball.y += 5;
+	}
+}
+
+function checkHit() {
+	//check if hits paddle
+	if ((ball.y >= paddle.y - ball.radius) && (ball.x >= paddle.x - ball.radius) && (ball.x <= paddle.x + paddle.width + ball.radius)) {
+		ball.up = true;
+		console.log("rats1");
+	}
+	else if (ball.x - ball.radius <= 0) { //check collision if collides with left wall
+
+	}
+	else if (ball.x + ball.radius >= canvas.width) { //check collision if collides with right wall
+
+	}
+	else if (ball.y - ball.radius <= 0) { //check collision if collides with top wall
+		ball.up = false;
+
+	}
+	else if (ball.y - ball.radius >= canvas.height) {
+		init();
 	}
 }
 
