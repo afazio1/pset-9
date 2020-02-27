@@ -1,6 +1,6 @@
 ///////////////////// CONSTANTS /////////////////////////////////////
-
-
+const brickWidth = 90;
+const brickHeight = 50;
 
 
 
@@ -17,6 +17,7 @@ let ctx = canvas.getContext('2d');
 let body = document.querySelector('body');
 let paddle;
 let ball;
+let bricks = [];
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
@@ -95,6 +96,21 @@ function init() {
 	    movementX: 0,
 	    movementY: 5
 	};
+	bricks = [];
+
+	// create bricks
+	for (let i = 0; i < canvas.width; i+= brickWidth) {
+
+		for (let j = 0; j < brickHeight * 3; j += brickHeight) {
+			brick = {
+				x: i,
+				y: j,
+				hit: false
+			};
+			bricks.push(brick);
+		}
+	
+	}
 	if (go <= 1) {
 		playButton = document.createElement('canvas');
 		let ctx2 = playButton.getContext('2d');
@@ -123,9 +139,15 @@ function init() {
 function game() {
 	gameStarted = true;
 	playButton.remove('play-button');
-
-	//create a paddle
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	//create the bricks
+	for (k = 0; k < bricks.length; k++) {
+		ctx.strokeStyle = 'lime';
+		ctx.strokeRect(bricks[k].x, bricks[k].y, brickWidth, brickHeight);
+	}
+	
+	//create a paddle
+	
 	ctx.fillStyle = '#12990e';
 	ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
 
@@ -135,7 +157,7 @@ function game() {
 	ctx.fillStyle = 'gray';
 	ctx.fill();
 	
-	checkHit();
+	checkHit(bricks, k);
 	changeDirection();
 	
 	setTimeout(game, 20);
@@ -181,12 +203,11 @@ function changeDirection() {
 	
 		ball.y += ball.movementY + 5;
 
-
 	}
 }
 
-function checkHit() {
-	
+function checkHit(bricks, k) {
+	console.log(bricks);
 	//check if hits paddle
 	if ((ball.y >= paddle.y - ball.radius) && (ball.x >= paddle.x - ball.radius) && (ball.x <= paddle.x + paddle.width + ball.radius)) {
 		ball.up = true;
@@ -205,6 +226,9 @@ function checkHit() {
 	else if (ball.y - ball.radius <= 0) { //check collision if collides with top wall
 		ball.up = false;
 
+	}
+	else if (ball.y - ball.radius === bricks[k].x) { //problems occur here
+		ball.up = false;
 	}
 	else if (ball.y - ball.radius >= canvas.height) {
 		init();
