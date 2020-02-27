@@ -91,6 +91,7 @@ function init() {
 	    y: canvas.height - 70,
 	    radius: 10,
 	    up: false,
+	 	right: false,
 	    movementX: 0,
 	    movementY: 5
 	};
@@ -143,15 +144,15 @@ function game() {
 
 function getArrows() {
 	if (gameStarted) {
-		if (event.keyCode === 37) { //left arrow key
+		if (event.keyCode === 37) { // left arrow key
 			if (paddle.x >= 40) {
-				paddle.x -= 20;
+				paddle.x -= 40;
 				paddle.movement--;
 				ctx.strokeStyle = 'lime';
 				ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
 			}
 		}
-		else if (event.keyCode === 39) { //right arrow key
+		else if (event.keyCode === 39) { // right arrow key
 			if (paddle.x + paddle.width <= canvas.width) {
 				paddle.x += 40;
 				paddle.movement++;
@@ -165,32 +166,21 @@ function getArrows() {
 function changeDirection() {
 	
 	if (ball.up) {
-		ball.movementX = paddle.movement;
 		ball.y -= ball.movementY + 5;
-		ball.x -= ball.movementX + 5;
 		
 		paddleHit = false;
 	}
-	else if (ball.up === false) {
-		
-		if (left) {
-			ball.movementX = paddle.movement;
-			ball.movementY = 5;
-			ball.y += ball.movementY;
-			ball.x += ball.movementX;
-			left = false;
-		}
-		else if (right) {
-			ball.movementX = paddle.movement * -1;
-			ball.movementY = 5;
-			ball.y += ball.movementY + 5;
-			ball.x -= ball.movementX + 5;
-			console.log(ball);
-			right = false;
-		}
-		else {
-			ball.y += 5;
-		}
+	if (ball.right) {
+		ball.x += ball.movementX + 5;
+
+	}
+	if (ball.right === false) {
+		ball.x -= ball.movementX + 5;
+	}
+	if (ball.up === false) {
+	
+		ball.y += ball.movementY + 5;
+
 
 	}
 }
@@ -205,12 +195,11 @@ function checkHit() {
 		console.log("rats1");
 	}
 	else if (ball.x - ball.radius <= 0) { //check collision if collides with left wall
-		ball.up = false;
-		left = true;
+		
+		ball.right = true;
 	}
 	else if (ball.x + ball.radius >= canvas.width) { //check collision if collides with right wall
-		ball.up = false;
-		right = true;
+		ball.right = false;
 
 	}
 	else if (ball.y - ball.radius <= 0) { //check collision if collides with top wall
@@ -220,11 +209,7 @@ function checkHit() {
 	else if (ball.y - ball.radius >= canvas.height) {
 		init();
 	}
-	else {
-		left = false;
-		right = false;
-		paddleHit = false;
-	}
+	
 }
 
 
