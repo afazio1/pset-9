@@ -165,30 +165,27 @@ function getArrows() {
 function changeDirection() {
 	
 	if (ball.up) {
-		console.log("rats2");
-		console.log(ball.x);
-		console.log(ball.y);
 		ball.movementX = paddle.movement;
 		ball.y -= ball.movementY + 5;
 		ball.x -= ball.movementX + 5;
-		console.log(ball.x);
-		console.log(ball.y);
+		
 		paddleHit = false;
 	}
 	else if (ball.up === false) {
 		
 		if (left) {
-			ball.movementX = 0;
+			ball.movementX = paddle.movement;
 			ball.movementY = 5;
 			ball.y += ball.movementY;
 			ball.x += ball.movementX;
 			left = false;
 		}
 		else if (right) {
-			ball.movementX = 0;
+			ball.movementX = paddle.movement * -1;
 			ball.movementY = 5;
-			ball.y += ball.movementY + 10;
+			ball.y += ball.movementY + 5;
 			ball.x -= ball.movementX + 5;
+			console.log(ball);
 			right = false;
 		}
 		else {
