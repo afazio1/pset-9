@@ -90,7 +90,9 @@ function init() {
 		x: (canvas.width / 2),
 	    y: canvas.height - 70,
 	    radius: 10,
-	    up: false 
+	    up: false,
+	    movementX: 0,
+	    movementY: 5
 	};
 	if (go <= 1) {
 		playButton = document.createElement('canvas');
@@ -144,6 +146,7 @@ function getArrows() {
 		if (event.keyCode === 37) { //left arrow key
 			if (paddle.x >= 40) {
 				paddle.x -= 20;
+				paddle.movement--;
 				ctx.strokeStyle = 'lime';
 				ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
 			}
@@ -151,6 +154,7 @@ function getArrows() {
 		else if (event.keyCode === 39) { //right arrow key
 			if (paddle.x + paddle.width <= canvas.width) {
 				paddle.x += 40;
+				paddle.movement++;
 				ctx.strokeStyle = 'lime';
 				ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height);
 			}
@@ -159,9 +163,10 @@ function getArrows() {
 }
 
 function changeDirection() {
+	
 	if (ball.up) {
-		ball.y -= 5;
-
+		ball.y -= ball.movementY;
+		ball.x -= ball.movementX;
 	}
 	else if (ball.up === false) {
 		ball.y += 5;
@@ -172,13 +177,15 @@ function checkHit() {
 	//check if hits paddle
 	if ((ball.y >= paddle.y - ball.radius) && (ball.x >= paddle.x - ball.radius) && (ball.x <= paddle.x + paddle.width + ball.radius)) {
 		ball.up = true;
+		ball.movementX = paddle.movement;
 		console.log("rats1");
 	}
 	else if (ball.x - ball.radius <= 0) { //check collision if collides with left wall
-
+		ball.up = false;
 	}
 	else if (ball.x + ball.radius >= canvas.width) { //check collision if collides with right wall
-
+		ball.up = false;
+		console.log("right");
 	}
 	else if (ball.y - ball.radius <= 0) { //check collision if collides with top wall
 		ball.up = false;
