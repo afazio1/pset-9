@@ -78,7 +78,6 @@ async function startup() {
 }
 
 function init() {
-	go++;
 	gameStarted = false;
 	paddle = {
 	    x: (canvas.width / 2) - 50,
@@ -111,6 +110,7 @@ function init() {
 		}
 	
 	}
+
 	if (go <= 1) {
 		playButton = document.createElement('canvas');
 		let ctx2 = playButton.getContext('2d');
@@ -121,6 +121,7 @@ function init() {
 		ctx2.font = '40px PressStart2P';
 	 	ctx2.fillStyle = 'black';
 	 	ctx2.fillText('Play', playButton.width/2 - 77, playButton.height/2 + 20);
+
 	}
 	
 
@@ -138,15 +139,11 @@ function init() {
 
 function game() {
 	gameStarted = true;
+	
 	playButton.remove('play-button');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	//create the bricks
-	for (k = 0; k < bricks.length; k++) {
-		ctx.strokeStyle = 'lime';
-		ctx.strokeRect(bricks[k].x, bricks[k].y, brickWidth, brickHeight);
-		
-	}
 	
+	go++;
 	//create a paddle
 	
 	ctx.fillStyle = '#12990e';
@@ -158,7 +155,14 @@ function game() {
 	ctx.fillStyle = 'gray';
 	ctx.fill();
 	
-	checkHit(bricks, k);
+	//create the bricks
+	for (k = 0; k < bricks.length; k++) {
+		if (bricks[k].hit === false || go === 1) {
+			ctx.strokeStyle = 'lime';
+			ctx.strokeRect(bricks[k].x, bricks[k].y, brickWidth, brickHeight);
+		}
+	}
+	checkHit();
 	changeDirection();
 	
 	setTimeout(game, 20);
@@ -207,9 +211,28 @@ function changeDirection() {
 	}
 }
 
-function checkHit(bricks, index) {
-	console.log(bricks);
-	console.log(index);
+function checkHit() {
+
+	//if ball hits a brick
+	for (let r = bricks.length - 1; r >= 0; r--) {
+		console.log(ball.x);
+		console.log(bricks[r].x);
+		if (ball.y - ball.radius === bricks[r].y + 50 && bricks[r].hit === false) {
+			console.log("gfhdjkgh");
+			ball.up = false;
+			bricks[r].hit = true;
+			console.log(bricks[r]);
+
+		}
+		else if (ball.y - ball.radius === bricks[r].y && bricks[r].hit === false) {
+			ball.up = false;
+			bricks[r].hit = true;
+		}
+		else if (ball.y - ball.radius === bricks[r].y - 50 && bricks[r].hit === false) {
+			ball.up = false;
+			bricks[r].hit = true;
+		}
+	}
 	//check if hits paddle
 	if ((ball.y >= paddle.y - ball.radius) && (ball.x >= paddle.x - ball.radius) && (ball.x <= paddle.x + paddle.width + ball.radius)) {
 		ball.up = true;
@@ -229,10 +252,10 @@ function checkHit(bricks, index) {
 		ball.up = false;
 
 	}
-	else if (ball.y - ball.radius >= canvas.height) {
+	else if (ball.y - ball.radius >= canvas.height) { //check collision with the floor & restart the game
 		init();
 	}
-	//if ball hits a brick
+
 	
 }
 
