@@ -144,6 +144,7 @@ function game() {
 	for (k = 0; k < bricks.length; k++) {
 		ctx.strokeStyle = 'lime';
 		ctx.strokeRect(bricks[k].x, bricks[k].y, brickWidth, brickHeight);
+		
 	}
 	
 	//create a paddle
@@ -206,8 +207,9 @@ function changeDirection() {
 	}
 }
 
-function checkHit(bricks, k) {
+function checkHit(bricks, index) {
 	console.log(bricks);
+	console.log(index);
 	//check if hits paddle
 	if ((ball.y >= paddle.y - ball.radius) && (ball.x >= paddle.x - ball.radius) && (ball.x <= paddle.x + paddle.width + ball.radius)) {
 		ball.up = true;
@@ -227,12 +229,10 @@ function checkHit(bricks, k) {
 		ball.up = false;
 
 	}
-	else if (ball.y - ball.radius === bricks[k].x) { //problems occur here
-		ball.up = false;
-	}
 	else if (ball.y - ball.radius >= canvas.height) {
 		init();
 	}
+	//if ball hits a brick
 	
 }
 
