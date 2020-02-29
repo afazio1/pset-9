@@ -1,0 +1,17 @@
+@font-face {
+	font-family: 'PressStart2P';
+	src: url("PressStart2P.ttf");
+}
+* {
+	font-family: "PressStart2P";
+}
+table {
+	margin: auto;
+}
+td {
+	border: 3px solid black;
+	padding: 0;
+	margin: 0;
+	width: 75px;
+	height: 75px;
+}
