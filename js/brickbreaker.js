@@ -212,25 +212,15 @@ function changeDirection() {
 }
 
 function checkHit() {
-
+	
 	//if ball hits a brick
 	for (let r = bricks.length - 1; r >= 0; r--) {
-		console.log(ball.x);
-		console.log(bricks[r].x);
-		if (ball.y - ball.radius === bricks[r].y + 50 && bricks[r].hit === false) {
+		
+		if (ball.y - ball.radius <= bricks[r].y + brickHeight && bricks[r].hit === false && ball.x >= bricks[r].x && ball.x < bricks[r].x + brickWidth) {
 			console.log("gfhdjkgh");
 			ball.up = false;
 			bricks[r].hit = true;
 			console.log(bricks[r]);
-
-		}
-		else if (ball.y - ball.radius === bricks[r].y && bricks[r].hit === false) {
-			ball.up = false;
-			bricks[r].hit = true;
-		}
-		else if (ball.y - ball.radius === bricks[r].y - 50 && bricks[r].hit === false) {
-			ball.up = false;
-			bricks[r].hit = true;
 		}
 	}
 	//check if hits paddle
