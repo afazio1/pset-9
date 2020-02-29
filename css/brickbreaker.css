@@ -36,3 +36,22 @@ h1 {
 	height: 50px;
 	z-index: 3;
 }
+.gameOver {
+	text-align: center;
+	font-family: 'PressStart2P';
+	color: white;
+	position: absolute;
+	z-index: 2;
+	margin-left: 42%;
+	margin-top: 15%;
+}
+.play-again {
+	text-align: center;
+	font-family: 'PressStart2P';
+	color: white;
+	position: absolute;
+	z-index: 2;
+	margin-left: 40%;
+	margin-top: 20%;
+	
+}

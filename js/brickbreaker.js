@@ -6,6 +6,8 @@ const brickHeight = 50;
 ///////////////////// APP STATE (VARIABLES) /////////////////////////
 let gameStarted;
 let go = 0;
+let win = null;
+let hitFloor;
 
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 
@@ -16,6 +18,7 @@ let body = document.querySelector('body');
 let paddle;
 let ball;
 let bricks = [];
+let endGame;
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
@@ -38,7 +41,16 @@ async function startup() {
 }
 
 function init() {
+	console.log("hi");
 	gameStarted = false;
+	//go = 0;
+	console.log(win);
+	if (win !== null) {
+		playAgain.remove('play-again');
+		endGame.remove();
+		console.log("should remove");
+	}
+	win = null;
 	paddle = {
 	    x: (canvas.width / 2) - 50,
 	    y: canvas.height - 40,
@@ -83,40 +95,53 @@ function init() {
 
 	}
 	
+	if (go >= 1) {
+		console.log("restatrg");
+		gameStarted = true;
+		game();
 
- 	playButton.onclick = game;
+	}
+	else {
+		playButton.onclick = game;
+	}
+ 	
 
 }
 
 function game() {
-	gameStarted = true;
-	
-	playButton.remove('play-button');
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	
-	go++;
-	//create a paddle
-	
-	ctx.fillStyle = '#12990e';
-	ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
-
-	//create a ball
-	ctx.beginPath();
-	ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-	ctx.fillStyle = 'gray';
-	ctx.fill();
-	
-	//create the bricks
-	for (k = 0; k < bricks.length; k++) {
-		if (bricks[k].hit === false || go === 1) {
-			ctx.strokeStyle = 'lime';
-			ctx.strokeRect(bricks[k].x, bricks[k].y, brickWidth, brickHeight);
-		}
+	if (go === 0) {
+		gameStarted = true;
 	}
-	checkHit();
-	changeDirection();
+	console.log(gameStarted);
+	if (gameStarted) {
+		playButton.remove('play-button');
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		
+		go++;
+		//draw the paddle
+		ctx.fillStyle = '#12990e';
+		ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+
+		//draw the ball
+		ctx.beginPath();
+		ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+		ctx.fillStyle = 'gray';
+		ctx.fill();
+		
+		//draw the bricks
+		for (k = 0; k < bricks.length; k++) {
+			if (bricks[k].hit === false || go === 1) {
+				ctx.strokeStyle = 'lime';
+				ctx.strokeRect(bricks[k].x, bricks[k].y, brickWidth, brickHeight);
+			}
+		}
+		checkHit();
+		gameOver();
+		changeDirection();
+		setTimeout(game, 20);
+	}
 	
-	setTimeout(game, 20);
+	
 
 }
 
@@ -192,10 +217,56 @@ function checkHit() {
 
 	}
 	else if (ball.y - ball.radius >= canvas.height) { //check collision with the floor & restart the game
-		init();
+		win = false;
 	}
-
-	
 }
 
+function gameOver() {
+	//display if you won or not
+	if (win !== false) {
+		for (let q = 0; q < bricks.length; q++) {
+			if (bricks[q].hit === true) {
+				win = true;
+			}
+			else {
+				win = null;
+				break;
+			}
+		}
+	}
+	
+	if (win) {
+		endGame = document.createElement('h1');
+		endGame.className = "gameOver";
+		endGame.innerHTML = "You Win!";
+		document.body.append(endGame);
+
+		//play again button
+		playAgain = document.createElement('h1');
+		playAgain.className = 'play-again';
+		playAgain.innerHTML = 'Play Again';
+		document.body.append(playAgain);
+		gameStarted = false;
+	 	playAgain.onclick = init;
+	}
+	else if (win === false) {
+		//create a header saying you lost
+		endGame = document.createElement('h1');
+		endGame.className = "gameOver";
+		endGame.innerHTML = "You Lose";
+		document.body.append(endGame);
+
+		//play again button
+		playAgain = document.createElement('h1');
+		playAgain.className = 'play-again';
+		playAgain.innerHTML = 'Play Again';
+		document.body.append(playAgain);
+		gameStarted = false;
+	 	playAgain.onclick = init;
+	 	
+	}
+	else if (win === null) {
+		return;
+	}
+}
 
