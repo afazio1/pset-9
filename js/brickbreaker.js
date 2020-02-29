@@ -8,6 +8,7 @@ let gameStarted;
 let go = 0;
 let win = null;
 let hitFloor;
+let score;
 
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 
@@ -19,7 +20,7 @@ let paddle;
 let ball;
 let bricks = [];
 let endGame;
-
+let scoreBoard = document.getElementById('score');
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
 window.onload = startup;
@@ -41,9 +42,9 @@ async function startup() {
 }
 
 function init() {
-	console.log("hi");
+	score = 0;
+	scoreBoard.innerHTML = "Score: " + score;
 	gameStarted = false;
-	//go = 0;
 	console.log(win);
 	if (win !== null) {
 		playAgain.remove('play-again');
@@ -83,15 +84,10 @@ function init() {
 	}
 
 	if (go <= 1) {
-		playButton = document.createElement('canvas');
-		let ctx2 = playButton.getContext('2d');
+		playButton = document.createElement('h1');
 		playButton.className = 'play-button';
-		body.append(playButton);
-		ctx2.fillStyle = 'lime';
-		ctx2.fillRect(0, 0, playButton.width, playButton.height);
-		ctx2.font = '40px PressStart2P';
-	 	ctx2.fillStyle = 'black';
-	 	ctx2.fillText('Play', playButton.width/2 - 77, playButton.height/2 + 20);
+		playButton.innerHTML = "Play";
+		document.body.append(playButton);
 
 	}
 	
@@ -195,6 +191,8 @@ function checkHit() {
 		if (ball.y - ball.radius <= bricks[r].y + brickHeight && bricks[r].hit === false && ball.x >= bricks[r].x && ball.x < bricks[r].x + brickWidth) {
 			ball.up = false;
 			bricks[r].hit = true;
+			score += 10;
+			scoreBoard.innerHTML = "Score: " + score;
 		}
 	}
 	//check if hits paddle
