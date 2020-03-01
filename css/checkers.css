@@ -15,3 +15,21 @@ td {
 	width: 75px;
 	height: 75px;
 }
+.piece-black {
+	margin: auto;
+	border-radius: 50px;
+	width: 70px;
+	height: 70px;
+	background-color: black;
+}
+
+.piece-red {
+	margin: auto;
+	border-radius: 50px;
+	width: 70px;
+	height: 70px;
+	background-color: red;
+}
+.brown {
+	background-color: brown;
+}

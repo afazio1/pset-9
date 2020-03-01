@@ -234,6 +234,7 @@ function gameOver() {
 	}
 	
 	if (win) {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		endGame = document.createElement('h1');
 		endGame.className = "gameOver";
 		endGame.innerHTML = "You Win!";
