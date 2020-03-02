@@ -6,10 +6,13 @@
 	font-family: "PressStart2P";
 }
 table {
-	margin: auto;
+	z-index: 2;
+	position: absolute;
+	margin-top: 5%;
+    margin-left: 25%;
 }
 td {
-	border: 3px solid black;
+	
 	padding: 0;
 	margin: 0;
 	width: 75px;
@@ -31,5 +34,15 @@ td {
 	background-color: red;
 }
 .brown {
-	background-color: brown;
+	background-color: lime;
 }
+
+canvas {
+    width: 620px;
+    height: 620px;
+    z-index: 1;
+    position: absolute;
+    margin-top: 5%;
+    margin-left: 25%
+}
+
