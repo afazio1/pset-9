@@ -18,23 +18,23 @@ td {
 	width: 75px;
 	height: 75px;
 }
-.piece-black {
+.piece-blue {
 	margin: auto;
 	border-radius: 50px;
 	width: 70px;
 	height: 70px;
-	background-color: black;
+	background-color: #50EEAF;
 }
 
-.piece-red {
+.piece-orange {
 	margin: auto;
 	border-radius: 50px;
 	width: 70px;
 	height: 70px;
-	background-color: red;
+	background-color: #FFC300;
 }
-.brown {
-	background-color: lime;
+.gray {
+	background-color: gray;
 }
 
 canvas {
@@ -45,4 +45,6 @@ canvas {
     margin-top: 5%;
     margin-left: 25%
 }
-
+.selected {
+	border: 2px solid black;
+}
