@@ -97,19 +97,19 @@ function createOrangePiece() {
 }
 function selectedPiece(e) {
 	piece = e.target;
-	console.log(piece);
 	if (piece.className === "piece-orange") {
 		piece.className = "selected piece-orange";
-		boardArray[piece.id - 7].className = "gray highlighted";
-		boardArray[piece.id - 9].className = "gray highlighted";
+		piece_id = Number(piece.id);
+		boardArray[piece_id - 7].className = "gray highlighted";
+		boardArray[piece_id - 9].className = "gray highlighted";
 		table.onclick = moveOrangePiece;
 	}
-	else if (square.className === "piece-blue") {
-		square.className = "selected piece-blue";
-		boardArray[piece.id + 7].className = "gray highlighted";
-		boardArrya[piece.id + 9].className = "gray highlighted";
+	else if (piece.className === "piece-blue") {
+		piece.className = "selected piece-blue";
+		piece_id = Number(piece.id); //piece.id needs to be a number or else they concatenate
+		boardArray[piece_id + 7].className = "gray highlighted";
+		boardArray[piece_id + 9].className = "gray highlighted";
 		table.onclick = moveBluePiece;
-		//.onclick = moveBluePiece;
 	}
 
 
@@ -118,24 +118,58 @@ function moveOrangePiece(e) {
 	//console.log(e.target.className);
 	console.log(e.target);
 
-	if (e.target.className === "gray highlighted") {
+	if (e.target.className === "gray highlighted" && e.target === boardArray[piece_id - 7]) {
 		//console.log("chicken");
 		//the person can go here
-		e.target.className = "piece-orange";
+		piece.className = "gray";
+		e.target.className = "gray";
+		boardArray[piece_id - 9].className = "gray";
+
+		let newOrangePiece = {
+                index: piece_id - 7,
+                king: false,
+                div: null
+        };
+
+		newOrangePiece.div = document.createElement("div");
+		newOrangePiece.div.setAttribute("class", "piece-orange");
+		newOrangePiece.div.setAttribute("id", newOrangePiece.index);
+		boardArray[newOrangePiece.index].append(newOrangePiece.div);
+		//boardArray[piece_id - 7].className = "gray";
+		//console.log(e.target);
+		
+	}
+	else if (e.target.className === "gray highlighted" && e.target === boardArray[piece_id - 9]) {
+		console.log("ok");
+		piece.className = "gray";
+		e.target.className = "gray";
+		boardArray[piece_id - 7].className = "gray";
+		let newOrangePiece = {
+                index: piece_id - 9,
+                king: false,
+                div: null
+        };
+
+		newOrangePiece.div = document.createElement("div");
+		newOrangePiece.div.setAttribute("class", "piece-orange");
+		newOrangePiece.div.setAttribute("id", newOrangePiece.index);
+		boardArray[newOrangePiece.index].append(newOrangePiece.div);
 	}
 	else if (e.target.className === "piece-orange") {
 		boardArray[piece.id - 7].className = "gray";
 		boardArray[piece.id - 9].className = "gray";
 		piece.className = "piece-orange";
 	}
-	//console.log("rattatata");
 }
 function moveBluePiece(e) {
-	if (e.target.className === "gray highlighted") {
-		e.target.className = "piece-blue";
+	if (e.target.className === "gray highlighted" && (e.target === boardArray[piece_id + 7] || e.target === boardArray[piece_id + 9])) {
+		piece.className = "gray";
+		e.target.className = "gray piece-blue";
+
 	}
-	else if (e.target.className === "piece-blue") {
-		boardArray[piece.id + 7].className = "gray";
-		boardArray[piece.id + 9].className = "gray";
-		piece.className = "piece-blue";
-	}
+	// else if (e.target.className === "piece-blue") {
+	// 	boardArray[piece.id + 7].className = "gray";
+	// 	boardArray[piece.id + 9].className = "gray";
+	// 	piece.className = "piece-blue";
+	// }
+}
