@@ -119,11 +119,10 @@ function moveOrangePiece(e) {
 	console.log(e.target);
 
 	if (e.target.className === "gray highlighted" && e.target === boardArray[piece_id - 7]) {
-		//console.log("chicken");
-		//the person can go here
-		piece.className = "gray";
+		
 		e.target.className = "gray";
 		boardArray[piece_id - 9].className = "gray";
+		piece.remove();
 
 		let newOrangePiece = {
                 index: piece_id - 7,
@@ -135,14 +134,12 @@ function moveOrangePiece(e) {
 		newOrangePiece.div.setAttribute("class", "piece-orange");
 		newOrangePiece.div.setAttribute("id", newOrangePiece.index);
 		boardArray[newOrangePiece.index].append(newOrangePiece.div);
-		//boardArray[piece_id - 7].className = "gray";
-		//console.log(e.target);
 		
 	}
 	else if (e.target.className === "gray highlighted" && e.target === boardArray[piece_id - 9]) {
-		console.log("ok");
-		piece.className = "gray";
+		
 		e.target.className = "gray";
+		piece.remove();
 		boardArray[piece_id - 7].className = "gray";
 		let newOrangePiece = {
                 index: piece_id - 9,
@@ -162,10 +159,40 @@ function moveOrangePiece(e) {
 	}
 }
 function moveBluePiece(e) {
-	if (e.target.className === "gray highlighted" && (e.target === boardArray[piece_id + 7] || e.target === boardArray[piece_id + 9])) {
-		piece.className = "gray";
-		e.target.className = "gray piece-blue";
+	if (e.target.className === "gray highlighted" && e.target === boardArray[piece_id + 7]) {
 
+		e.target.className = "gray";
+		boardArray[piece_id + 9].className = "gray";
+		piece.remove();
+
+		let newBluePiece = {
+                index: piece_id + 7,
+                king: false,
+                div: null
+        };
+
+		newBluePiece.div = document.createElement("div");
+		newBluePiece.div.setAttribute("class", "piece-blue");
+		newBluePiece.div.setAttribute("id", newBluePiece.index);
+		boardArray[newBluePiece.index].append(newBluePiece.div);
+
+	}
+	else if (e.target === boardArray[piece_id + 9]) {
+		
+		e.target.className = "gray";
+		boardArray[piece_id + 7].className = "gray";
+		piece.remove();
+
+		let newBluePiece = {
+                index: piece_id + 9,
+                king: false,
+                div: null
+        };
+
+		newBluePiece.div = document.createElement("div");
+		newBluePiece.div.setAttribute("class", "piece-blue");
+		newBluePiece.div.setAttribute("id", newBluePiece.index);
+		boardArray[newBluePiece.index].append(newBluePiece.div);
 	}
 	// else if (e.target.className === "piece-blue") {
 	// 	boardArray[piece.id + 7].className = "gray";
