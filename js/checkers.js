@@ -106,6 +106,9 @@ function selectedPiece(e) {
 	}
 	else if (square.className === "piece-blue") {
 		square.className = "selected piece-blue";
+		boardArray[piece.id + 7].className = "gray highlighted";
+		boardArrya[piece.id + 9].className = "gray highlighted";
+		table.onclick = moveBluePiece;
 		//.onclick = moveBluePiece;
 	}
 
@@ -128,5 +131,11 @@ function moveOrangePiece(e) {
 	//console.log("rattatata");
 }
 function moveBluePiece(e) {
-
-}
+	if (e.target.className === "gray highlighted") {
+		e.target.className = "piece-blue";
+	}
+	else if (e.target.className === "piece-blue") {
+		boardArray[piece.id + 7].className = "gray";
+		boardArray[piece.id + 9].className = "gray";
+		piece.className = "piece-blue";
+	}
