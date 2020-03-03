@@ -11,7 +11,7 @@ let table = document.getElementById("table");
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
 window.onload = init;
-table.onclick = selectedPiece;
+//table.onclick = selectedPiece;
 
 
 
@@ -20,25 +20,47 @@ table.onclick = selectedPiece;
 function init() {
 	createBoard();
 	createBluePiece();
+	createOrangePiece();
 }
 
 function createBoard() {
-	
-	for (let i = 0; i < graySquares.length - 1; i+=2) {
-		
-			boardArray.push(graySquares[i]);
-			boardArray.push(null);
-			boardArray.push(graySquares[i + 1]);
-			boardArray.push(null);
-		
-	}
-	boardArray.pop();
-	console.log(boardArray);
+	for (let j = 0; j < 64; j++) {
+        boardArray.push(null);
+    }
+
+    let k = 0;
+    let oddRow = true;
+
+    for (let l = 0; l < 64; l++) {
+        if (l !== 0 && l % 8 === 0) {
+            oddRow = !oddRow;
+            k = (!oddRow) ? k - 1 : k + 1;
+        }
+        if (oddRow) {
+            if (l % 2 !== 0) {
+                boardArray[l] = "";
+            }
+            else if (l % 2 === 0) {
+                boardArray[l] = graySquares[k];
+                k++;
+            }
+        }
+        else {
+            if (l % 2 !== 0) {
+                boardArray[l] = graySquares[k];
+            }
+            else if (l % 2 === 0) {
+                boardArray[l] = "";
+                k++;
+            }
+        }
+    }
+    console.log(boardArray);
 }
 function createBluePiece() {
 	let happened = false;
 	for (let b = 0; b < boardArray.length - 40; b+=2) {
-		if (b % 8 === 0 && b !== 0 && !happened) { //if there is a row, then increase b
+		if (b === 8 && !happened) { //if there is a row, then increase b
 			b++;
 			happened = true;
 		}
@@ -48,12 +70,31 @@ function createBluePiece() {
 		}
 		let newBluePiece = {
 			index: b,
-			king: false
+			king: false,
+			div: null
 		};
-		console.log(newBluePiece);
+		
+		newBluePiece.div = document.createElement("div");
+		newBluePiece.div.setAttribute("class", "piece-blue");
+		newBluePiece.div.setAttribute("id", b);
+		boardArray[b].append(newBluePiece.div);
 	}
 }
-
+function createOrangePiece() {
+	for (let o = 63; o >= 40; o--) {
+        if (boardArray[o] !== "") {
+            let newOrangePiece = {
+                index: o,
+                king: false,
+                div: null
+            };
+		newOrangePiece.div = document.createElement("div");
+		newOrangePiece.div.setAttribute("class", "piece-orange");
+		newOrangePiece.div.setAttribute("id", o);
+		boardArray[o].append(newOrangePiece.div);
+	}
+}
+}
 function selectedPiece(e) {
 	square = e.target;
 	console.log(square);
