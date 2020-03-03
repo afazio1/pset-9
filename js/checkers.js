@@ -11,7 +11,7 @@ let table = document.getElementById("table");
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
 window.onload = init;
-//table.onclick = selectedPiece;
+table.onclick = selectedPiece;
 
 
 
@@ -96,12 +96,13 @@ function createOrangePiece() {
 }
 }
 function selectedPiece(e) {
-	square = e.target;
-	console.log(square);
-	if (square.className === "piece-orange") {
-		square.className = "selected piece-orange";
+	piece = e.target;
+	console.log(piece);
+	if (piece.className === "piece-orange") {
+		piece.className = "selected piece-orange";
+		boardArray[piece.id - 7].className = "gray highlighted";
+		boardArray[piece.id - 9].className = "gray highlighted";
 		table.onclick = moveOrangePiece;
-		console.log(square);
 	}
 	else if (square.className === "piece-blue") {
 		square.className = "selected piece-blue";
@@ -113,9 +114,16 @@ function selectedPiece(e) {
 function moveOrangePiece(e) {
 	//console.log(e.target.className);
 	console.log(e.target);
-	if (e.target.className === "" && e.target.className !== "piece-blue" && e.target.className !== "piece-orange") {
+
+	if (e.target.className === "gray highlighted") {
 		//console.log("chicken");
+		//the person can go here
 		e.target.className = "piece-orange";
+	}
+	else if (e.target.className === "piece-orange") {
+		boardArray[piece.id - 7].className = "gray";
+		boardArray[piece.id - 9].className = "gray";
+		piece.className = "piece-orange";
 	}
 	//console.log("rattatata");
 }

@@ -48,3 +48,9 @@ canvas {
 .selected {
 	border: 2px solid black;
 }
+.highlighted {
+	background-color: yellow;
+	width: 70px;
+	height: 70px;
+	border: 2.5px solid gray;
+}
