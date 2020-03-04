@@ -7,6 +7,8 @@ let square;
 let orangePieces = [];
 let bluePieces = [];
 let turn = "blue";
+let move = false;
+
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 let graySquares = document.getElementsByClassName('gray');
 let table = document.getElementById("table");
@@ -99,9 +101,9 @@ function createOrangePiece() {
 }
 }
 
-function selectedPiece() {
-	
-	for (let i = 0; i < bluePieces.length; i++) {
+function selectedPiece(otherPiece) {
+	if (move === false) {
+		for (let i = 0; i < bluePieces.length; i++) {
 		bluePieces[i].div.onclick = function() {
 			if (turn === "blue") {
 				console.log("reetreert");
@@ -115,19 +117,36 @@ function selectedPiece() {
 		}
 	}
 
-	for (let i = 0; i < orangePieces.length; i++) {
-		orangePieces[i].div.onclick = function() {
-			if (turn === "orange") {
+		for (let i = 0; i < orangePieces.length; i++) {
+			orangePieces[i].div.onclick = function() {
+				if (turn === "orange") {
+					
+					orangePieces[i].div.className = "selected piece-orange";
+					index = orangePieces[i].index;
+					boardArray[index - 7].className = "gray highlighted";
+					boardArray[index - 9].className = "gray highlighted";
+					moveOrangePiece(index);
+				}
 				
-				orangePieces[i].div.className = "selected piece-orange";
-				index = orangePieces[i].index;
-				boardArray[index - 7].className = "gray highlighted";
-				boardArray[index - 9].className = "gray highlighted";
-				moveOrangePiece(index);
 			}
-			
 		}
 	}
+	// else if (move) {
+	// 	//should clear the selected pieces
+		
+	// 	console.log(otherPiece.id);
+	// 	for (let a = 0; a < bluePieces.length; a++) {
+	// 		if (a !== otherPiece.id) {
+	// 			bluePieces[a].div.className = "piece-blue";
+	// 		}
+	// 	}
+	// 	for (let b = 0; b < boardArray.length; b++) {
+	// 		boardArray[b].className = "gray";
+	// 	}
+		
+	// }
+
+	
 }
 //move functions need to be fixed
 function moveBluePiece(index) {
@@ -138,9 +157,9 @@ function moveBluePiece(index) {
 			boardArray[index + 7].className = "gray";
 			boardArray[index + 9].className = "gray";
 			console.log(index);
-			for (let i = 0; i < bluePieces.length; i++) {
-				if (bluePieces[i].index === index) {
-					chipToRemove = bluePieces[i];
+			for (let g = 0; g < bluePieces.length; g++) {
+				if (bluePieces[g].index === index) {
+					chipToRemove = bluePieces[g];
 					break;
 				}
 			}
@@ -153,9 +172,9 @@ function moveBluePiece(index) {
 			//move chip
 			boardArray[index + 7].className = "gray";
 			boardArray[index + 9].className = "gray";
-			for (let i = 0; i < bluePieces.length; i++) {
-				if (bluePieces[i].index === index) {
-					chipToRemove = bluePieces[i];
+			for (let j = 0; j < bluePieces.length; j++) {
+				if (bluePieces[j].index === index) {
+					chipToRemove = bluePieces[j];
 					break;
 				}
 			}
@@ -164,10 +183,35 @@ function moveBluePiece(index) {
 			chipToRemove.div.id = i;
 			boardArray[i].append(chipToRemove.div);
 		}
+		else {
+			// console.log("ratargfdgs");
+			// change = true;
+			// for (let k = 0; k < bluePieces.length; k++) {
+			// 	console.log(boardArray[i]);
+			// 	console.log(bluePieces[k].index);
+			// 	console.log(i);
+			// 	//console.log(bluePieces[k].index);
+
+			// 	if (i === bluePieces[k].index) {
+			// 		otherPiece = bluePieces[k].div;
+			// 		otherPiece.className = "selected piece-blue";
+			// 		move = true;
+			// 		//selectedPiece(otherPiece);
+					
+					
+			// 		// console.log(index);
+			// 		// bluePieces[index].div.className = "piece-blue";
+					
+			// 		//break;
+				//}
+			//}
+			return;
+		}
 	}
 	
 	}
-	turn = "orange";
+		turn = "orange";
+	
 }
 
 function moveOrangePiece(index) {
