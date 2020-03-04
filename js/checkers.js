@@ -6,6 +6,7 @@ let boardArray = [];
 let square;
 let orangePieces = [];
 let bluePieces = [];
+let turn = "blue";
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 let graySquares = document.getElementsByClassName('gray');
 let table = document.getElementById("table");
@@ -13,8 +14,6 @@ let table = document.getElementById("table");
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
 window.onload = init;
-
-
 
 
 ///////////////////// FUNCTIONS /////////////////////////////////////
@@ -101,131 +100,112 @@ function createOrangePiece() {
 }
 
 function selectedPiece() {
-	//console.log("SLEEM");
+	
 	for (let i = 0; i < bluePieces.length; i++) {
 		bluePieces[i].div.onclick = function() {
-			console.log("reetreert");
-			moveBluePiece();
+			if (turn === "blue") {
+				console.log("reetreert");
+				bluePieces[i].div.className = "selected piece-blue";
+				index = bluePieces[i].index;
+				boardArray[index + 7].className = "gray highlighted";
+				boardArray[index + 9].className = "gray highlighted";
+				moveBluePiece(index);
+			}
+			
 		}
 	}
 
 	for (let i = 0; i < orangePieces.length; i++) {
 		orangePieces[i].div.onclick = function() {
-			console.log("sleeeeeem");
-			moveOrangePiece();
+			if (turn === "orange") {
+				
+				orangePieces[i].div.className = "selected piece-orange";
+				index = orangePieces[i].index;
+				boardArray[index - 7].className = "gray highlighted";
+				boardArray[index - 9].className = "gray highlighted";
+				moveOrangePiece(index);
+			}
+			
 		}
 	}
-	// for (let i = 0; i < boardArray.length; i++) {
-	// 	if (boardArray[i].className === "gray highlighted") {
-	// 		boardArray[i].className === "gray";
-	// 	}
-	// }
-	// piece = e.target;
-	// if (piece.className === "piece-orange") { //if the player selects an orange piece, then change styling and call move func
-	// 	piece.className = "selected piece-orange";
-	// 	piece_id = Number(piece.id);
-	// 	boardArray[piece_id - 7].className = "gray highlighted";
-	// 	boardArray[piece_id - 9].className = "gray highlighted";
-	// 	table.onclick = moveOrangePiece;
-	// }
-	// else if (piece.className === "piece-blue") { //if the user selects a blue piece, then change styling and call move func
-	// 	piece.className = "selected piece-blue";
-	// 	piece_id = Number(piece.id); //piece.id needs to be a number or else they concatenate
-	// 	boardArray[piece_id + 7].className = "gray highlighted";
-	// 	boardArray[piece_id + 9].className = "gray highlighted";
-	// 	table.onclick = moveBluePiece;
-	// }
-	// else {
-	// 	return;
-	// }
-
-
 }
 //move functions need to be fixed
-function moveBluePiece(e) {
-	if (e.target.className === "gray highlighted" && e.target === boardArray[piece_id + 7]) { //if user clicked the first available spot
-
-		e.target.className = "gray";
-		boardArray[piece_id + 9].className = "gray";
-		piece.remove();
-
-		let newBluePiece = {
-                index: piece_id + 7,
-                king: false,
-                div: null
-        };
-
-		newBluePiece.div = document.createElement("div");
-		newBluePiece.div.setAttribute("class", "piece-blue");
-		newBluePiece.div.setAttribute("id", newBluePiece.index);
-		boardArray[newBluePiece.index].append(newBluePiece.div);
-
+function moveBluePiece(index) {
+	for (let i = 0; i < boardArray.length; i++) {
+		boardArray[i].onclick = function(){
+		if (i === index + 7) {
+			console.log("sleeeeeem");
+			boardArray[index + 7].className = "gray";
+			boardArray[index + 9].className = "gray";
+			console.log(index);
+			for (let i = 0; i < bluePieces.length; i++) {
+				if (bluePieces[i].index === index) {
+					chipToRemove = bluePieces[i];
+					break;
+				}
+			}
+			chipToRemove.div.className = "piece-blue";
+			chipToRemove.index = i;
+			chipToRemove.div.id = i;
+			boardArray[i].append(chipToRemove.div);
+		}
+		else if (i === index + 9) {
+			//move chip
+			boardArray[index + 7].className = "gray";
+			boardArray[index + 9].className = "gray";
+			for (let i = 0; i < bluePieces.length; i++) {
+				if (bluePieces[i].index === index) {
+					chipToRemove = bluePieces[i];
+					break;
+				}
+			}
+			chipToRemove.div.className = "piece-blue";
+			chipToRemove.index = i;
+			chipToRemove.div.id = i;
+			boardArray[i].append(chipToRemove.div);
+		}
 	}
-	else if (e.target === boardArray[piece_id + 9]) { //if the user clicked the second available spot
-		
-		e.target.className = "gray";
-		boardArray[piece_id + 7].className = "gray";
-		piece.remove();
-
-		let newBluePiece = {
-                index: piece_id + 9,
-                king: false,
-                div: null
-        };
-
-		newBluePiece.div = document.createElement("div");
-		newBluePiece.div.setAttribute("class", "piece-blue");
-		newBluePiece.div.setAttribute("id", newBluePiece.index);
-		boardArray[newBluePiece.index].append(newBluePiece.div);
+	
 	}
-	else if (e.target.className === "piece-blue") { //if the user clicks another blue piece, then change selections
-		boardArray[piece_id + 7].className = "gray";
-		boardArray[piece_id + 9].className = "gray";
-		//piece.className = "piece-blue";
-		//e.target.className = "piece-blue selected";
-	}
+	turn = "orange";
 }
 
-function moveOrangePiece(e) {
-	//after the second click, determine what the user clicked
-	if (e.target.className === "gray highlighted" && e.target === boardArray[piece_id - 7]) { //if user clicked the first available spot
-
-		e.target.className = "gray";
-		boardArray[piece_id - 9].className = "gray";
-		piece.remove();
-
-		let newOrangePiece = {
-                index: piece_id - 7,
-                king: false,
-                div: null
-        };
-
-		newOrangePiece.div = document.createElement("div");
-		newOrangePiece.div.setAttribute("class", "piece-orange");
-		newOrangePiece.div.setAttribute("id", newOrangePiece.index);
-		boardArray[newOrangePiece.index].append(newOrangePiece.div);
-		
+function moveOrangePiece(index) {
+	for (let i = 0; i < boardArray.length; i++) {
+		boardArray[i].onclick = function(){
+		if (i === index - 7) {
+			console.log("sleeeeeem");
+			boardArray[index - 7].className = "gray";
+			boardArray[index - 9].className = "gray";
+			console.log(index);
+			for (let i = 0; i < orangePieces.length; i++) {
+				if (orangePieces[i].index === index) {
+					chipToRemove = orangePieces[i];
+					break;
+				}
+			}
+			chipToRemove.div.className = "piece-orange";
+			chipToRemove.index = i;
+			chipToRemove.div.id = i;
+			boardArray[i].append(chipToRemove.div);
+		}
+		else if (i === index - 9) {
+			boardArray[index - 7].className = "gray";
+			boardArray[index - 9].className = "gray";
+			for (let i = 0; i < orangePieces.length; i++) {
+				if (orangePieces[i].index === index) {
+					chipToRemove = orangePieces[i];
+					break;
+				}
+			}
+			chipToRemove.div.className = "piece-orange";
+			chipToRemove.index = i;
+			chipToRemove.div.id = i;
+			boardArray[i].append(chipToRemove.div);
+		}
 	}
-	else if (e.target.className === "gray highlighted" && e.target === boardArray[piece_id - 9]) { //if the user clicked the second available spot
-		
-		e.target.className = "gray";
-		piece.remove();
-		boardArray[piece_id - 7].className = "gray";
-		let newOrangePiece = {
-                index: piece_id - 9,
-                king: false,
-                div: null
-        };
-
-		newOrangePiece.div = document.createElement("div");
-		newOrangePiece.div.setAttribute("class", "piece-orange");
-		newOrangePiece.div.setAttribute("id", newOrangePiece.index);
-		boardArray[newOrangePiece.index].append(newOrangePiece.div);
+	
 	}
-	// else if (e.target.className === "piece-orange") {
-	// 	boardArray[piece.id - 7].className = "gray";
-	// 	boardArray[piece.id - 9].className = "gray";
-	// 	piece.className = "piece-orange";
-	// }
+	turn = "blue";
 }
 
