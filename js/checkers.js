@@ -113,7 +113,6 @@ function selectedPiece(otherPiece) {
 				boardArray[index + 9].className = "gray highlighted";
 				moveBluePiece(index);
 			}
-			
 		}
 	}
 
@@ -131,20 +130,20 @@ function selectedPiece(otherPiece) {
 			}
 		}
 	}
-	// else if (move) {
-	// 	//should clear the selected pieces
-		
-	// 	console.log(otherPiece.id);
-	// 	for (let a = 0; a < bluePieces.length; a++) {
-	// 		if (a !== otherPiece.id) {
-	// 			bluePieces[a].div.className = "piece-blue";
-	// 		}
-	// 	}
-	// 	for (let b = 0; b < boardArray.length; b++) {
-	// 		boardArray[b].className = "gray";
-	// 	}
-		
-	// }
+	else if (move) {
+		//should clear the selected pieces
+		if (turn === "blue") {
+			console.log(otherPiece.id);
+			for (let a = 0; a < bluePieces.length; a++) {
+				if (a !== otherPiece.id) {
+					bluePieces[a].div.className = "piece-blue";
+				}
+			}
+			for (let b = 0; b < boardArray.length; b++) {
+				boardArray[b].className = "gray";
+			}
+		}
+	}
 
 	
 }
@@ -184,27 +183,26 @@ function moveBluePiece(index) {
 			boardArray[i].append(chipToRemove.div);
 		}
 		else {
-			// console.log("ratargfdgs");
-			// change = true;
-			// for (let k = 0; k < bluePieces.length; k++) {
-			// 	console.log(boardArray[i]);
-			// 	console.log(bluePieces[k].index);
-			// 	console.log(i);
-			// 	//console.log(bluePieces[k].index);
+			console.log("ratargfdgs");
+			for (let k = 0; k < bluePieces.length; k++) {
+				console.log(boardArray[i]);
+				console.log(bluePieces[k].index);
+				console.log(i);
+				//console.log(bluePieces[k].index);
 
-			// 	if (i === bluePieces[k].index) {
-			// 		otherPiece = bluePieces[k].div;
-			// 		otherPiece.className = "selected piece-blue";
-			// 		move = true;
-			// 		//selectedPiece(otherPiece);
+				if (i === bluePieces[k].index) {
+					otherPiece = bluePieces[k].div;
+					otherPiece.className = "selected piece-blue";
+					move = true;
+					//selectedPiece(otherPiece);
 					
 					
-			// 		// console.log(index);
-			// 		// bluePieces[index].div.className = "piece-blue";
+					// console.log(index);
+					// bluePieces[index].div.className = "piece-blue";
 					
-			// 		//break;
-				//}
-			//}
+					//break;
+				}
+			}
 			return;
 		}
 	}
