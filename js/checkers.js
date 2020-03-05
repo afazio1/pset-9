@@ -6,7 +6,7 @@ let boardArray = [];
 let square;
 let orangePieces = [];
 let bluePieces = [];
-let turn = "blue";
+let turn = "orange";
 let move = false;
 
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
@@ -101,153 +101,313 @@ function createOrangePiece() {
 }
 }
 
-function selectedPiece(otherPiece) {
-	if (move === false) {
+function selectedPiece() {
 		for (let i = 0; i < bluePieces.length; i++) {
 		bluePieces[i].div.onclick = function() {
 			if (turn === "blue") {
-				console.log("reetreert");
-				bluePieces[i].div.className = "selected piece-blue";
-				index = bluePieces[i].index;
-				boardArray[index + 7].className = "gray highlighted";
-				boardArray[index + 9].className = "gray highlighted";
-				moveBluePiece(index);
+				moveBluePiece(i);
 			}
 		}
 	}
 
-		for (let i = 0; i < orangePieces.length; i++) {
-			orangePieces[i].div.onclick = function() {
-				if (turn === "orange") {
-					
-					orangePieces[i].div.className = "selected piece-orange";
-					index = orangePieces[i].index;
-					boardArray[index - 7].className = "gray highlighted";
-					boardArray[index - 9].className = "gray highlighted";
-					moveOrangePiece(index);
-				}
-				
+	for (let i = 0; i < orangePieces.length; i++) {
+		orangePieces[i].div.onclick = function() {
+			if (turn === "orange") {
+				moveOrangePiece(i);
 			}
 		}
 	}
-	else if (move) {
-		//should clear the selected pieces
-		if (turn === "blue") {
-			console.log(otherPiece.id);
-			for (let a = 0; a < bluePieces.length; a++) {
-				if (a !== otherPiece.id) {
-					bluePieces[a].div.className = "piece-blue";
-				}
-			}
-			for (let b = 0; b < boardArray.length; b++) {
-				boardArray[b].className = "gray";
-			}
-		}
-	}
-
-	
 }
 //move functions need to be fixed
-function moveBluePiece(index) {
-	for (let i = 0; i < boardArray.length; i++) {
-		boardArray[i].onclick = function(){
-		if (i === index + 7) {
-			console.log("sleeeeeem");
-			boardArray[index + 7].className = "gray";
-			boardArray[index + 9].className = "gray";
-			console.log(index);
-			for (let g = 0; g < bluePieces.length; g++) {
-				if (bluePieces[g].index === index) {
-					chipToRemove = bluePieces[g];
-					break;
-				}
-			}
-			chipToRemove.div.className = "piece-blue";
-			chipToRemove.index = i;
-			chipToRemove.div.id = i;
-			boardArray[i].append(chipToRemove.div);
-		}
-		else if (i === index + 9) {
-			//move chip
-			boardArray[index + 7].className = "gray";
-			boardArray[index + 9].className = "gray";
-			for (let j = 0; j < bluePieces.length; j++) {
-				if (bluePieces[j].index === index) {
-					chipToRemove = bluePieces[j];
-					break;
-				}
-			}
-			chipToRemove.div.className = "piece-blue";
-			chipToRemove.index = i;
-			chipToRemove.div.id = i;
-			boardArray[i].append(chipToRemove.div);
-		}
-		else {
-			console.log("ratargfdgs");
-			for (let k = 0; k < bluePieces.length; k++) {
-				console.log(boardArray[i]);
-				console.log(bluePieces[k].index);
-				console.log(i);
-				//console.log(bluePieces[k].index);
-
-				if (i === bluePieces[k].index) {
-					otherPiece = bluePieces[k].div;
-					otherPiece.className = "selected piece-blue";
-					move = true;
-					//selectedPiece(otherPiece);
-					
-					
-					// console.log(index);
-					// bluePieces[index].div.className = "piece-blue";
-					
-					//break;
-				}
-			}
-			return;
-		}
-	}
-	
-	}
-		turn = "orange";
-	
-}
 
 function moveOrangePiece(index) {
-	for (let i = 0; i < boardArray.length; i++) {
-		boardArray[i].onclick = function(){
-		if (i === index - 7) {
-			console.log("sleeeeeem");
-			boardArray[index - 7].className = "gray";
-			boardArray[index - 9].className = "gray";
-			console.log(index);
-			for (let i = 0; i < orangePieces.length; i++) {
-				if (orangePieces[i].index === index) {
-					chipToRemove = orangePieces[i];
-					break;
-				}
-			}
-			chipToRemove.div.className = "piece-orange";
-			chipToRemove.index = i;
-			chipToRemove.div.id = i;
-			boardArray[i].append(chipToRemove.div);
-		}
-		else if (i === index - 9) {
-			boardArray[index - 7].className = "gray";
-			boardArray[index - 9].className = "gray";
-			for (let i = 0; i < orangePieces.length; i++) {
-				if (orangePieces[i].index === index) {
-					chipToRemove = orangePieces[i];
-					break;
-				}
-			}
-			chipToRemove.div.className = "piece-orange";
-			chipToRemove.index = i;
-			chipToRemove.div.id = i;
-			boardArray[i].append(chipToRemove.div);
-		}
-	}
-	
-	}
-	turn = "blue";
+
+	for (let i = 0; i < orangePieces.length; i++) {
+        orangePieces[i].div.className = "piece-orange";
+    }
+    for (let i = 0; i < graySquares.length; i++) {
+        graySquares[i].className = "gray";
+    }
+    orangePieces[index].div.className = "selected piece-orange";
+
+    if (orangePieces[index].king) {
+
+    }
+    else {
+        console.log(orangePieces[index]);
+
+        let canRight = true;
+        let canLeft = true;
+        let leftMultiple = 1;
+        let rightMultiple = 1;
+        for (let i = 0; i < orangePieces.length; i++) {
+            if (orangePieces[i].index === orangePieces[index].index - 7) {
+                canRight = false;
+
+
+            }
+            if (orangePieces[i].index === orangePieces[index].index - 9) {
+                canLeft = false;
+            }
+        }
+        for (let i = 0; i < bluePieces.length; i++) {
+        	
+            if (bluePieces[i].index === orangePieces[index].index - 7) {
+            	console.log("why");
+                for (let j = 0; j < bluePieces.length; j++) {
+                	//console.log(bluePieces[j]);
+                	//console.log(orangePieces[index]);
+                    if (bluePieces[j].index === orangePieces[index].index - 14) {
+                        canRight = false;
+                        
+                    }
+                    else {
+                    	rightMultiple = 2;
+                    }
+                }
+                for (let k = 0; k < orangePieces.length; k++) {
+                    if (orangePieces[k].index === orangePieces[index].index - 14) {
+                        canRight = false;
+                        rightMultiple = 1;
+                    }
+                }
+            }
+            if (bluePieces[i].index === orangePieces[index].index - 9) {
+                for (let j = 0; j < bluePieces.length; j++) {
+                    if (bluePieces[j].index === orangePieces[index].index - 18) {
+                        canLeft = false;
+                        
+                    }
+                    else {
+                    	leftMultiple = 2;
+                    }
+                }
+                for (let k = 0; k < orangePieces.length; k++) {
+                    if (orangePieces[k].index === orangePieces[index].index - 18) {
+                        canLeft = false;
+                        leftMultiple = 1;
+                    }
+                }
+            }
+        }
+
+        if (boardArray[orangePieces[index].index - (7 * rightMultiple)] !== "" && canRight) {
+            boardArray[orangePieces[index].index - (7 * rightMultiple)].className = "highlighted gray";
+        }
+        if (boardArray[orangePieces[index].index - (9 * leftMultiple)] !== "" && canLeft) {
+            boardArray[orangePieces[index].index - (9 * leftMultiple)].className = "highlighted gray";
+        }
+        //left of here
+        for (let i = 0; i < boardArray.length; i++) {
+            boardArray[i].onclick = undefined;
+        }
+
+        if (canRight) {
+            boardArray[orangePieces[index].index - (7 * rightMultiple)].onclick = function() {
+
+                boardArray[orangePieces[index].index - (7 * rightMultiple)].onclick = undefined;
+                boardArray[orangePieces[index].index - (9 * leftMultiple)].onclick = undefined;
+
+                if (boardArray[orangePieces[index].index - (7 * rightMultiple)] !== "") {
+                    boardArray[orangePieces[index].index - (7 * rightMultiple)].className = "gray";
+                }
+                if (boardArray[orangePieces[index].index - (9 * leftMultiple)] !== "") {
+                    boardArray[orangePieces[index].index - (9 * leftMultiple)].className = "gray";
+                }
+                orangePieces[index].div.className = "piece-orange";
+
+                boardArray[orangePieces[index].index - (7 * rightMultiple)].append(orangePieces[index].div);
+
+                if (rightMultiple === 2) {
+                    for (let i = 0; i < bluePieces.length; i++) {
+                        if (bluePieces[i].index === orangePieces[index].index - 7) {
+                            bluePieces[i].div.remove();
+                            bluePieces.splice(i, 1);
+                        }
+                    }
+                }
+
+                orangePieces[index].index -= (7 * rightMultiple);
+
+                turn = "blue";
+                //document.getElementById("turn").innerHTML = turn;
+            }
+        }
+
+        if (canLeft) {
+            boardArray[orangePieces[index].index - (9 * leftMultiple)].onclick = function() {
+                console.log("left");
+
+                boardArray[orangePieces[index].index - (7 * rightMultiple)].onclick = undefined;
+                boardArray[orangePieces[index].index - (9 * leftMultiple)].onclick = undefined;
+
+                if (boardArray[orangePieces[index].index - (7 * rightMultiple)] !== "") {
+                    boardArray[orangePieces[index].index - (7 * rightMultiple)].className = "gray";
+                }
+                if (boardArray[orangePieces[index].index - (9 * leftMultiple)] !== "") {
+                    boardArray[orangePieces[index].index - (9 * leftMultiple)].className = "gray";
+                }
+                orangePieces[index].div.className = "piece-orange";
+
+                boardArray[orangePieces[index].index - (9 * leftMultiple)].append(orangePieces[index].div);
+
+                if (leftMultiple === 2) {
+                    for (let i = 0; i < bluePieces.length; i++) {
+                        if (bluePieces[i].index === orangePieces[index].index - 9) {
+                            bluePieces[i].div.remove();
+                            bluePieces.splice(i, 1);
+                        }
+                    }
+                }
+
+                orangePieces[index].index -= (9 * leftMultiple);
+
+                turn = "blue";
+                //document.getElementById("turn").innerHTML = turn;
+            }
+        }
+    }
+}
+
+function moveBluePiece(index2) {
+
+	for (let i = 0; i < bluePieces.length; i++) {
+        bluePieces[i].div.className = "piece-blue";
+    }
+    for (let i = 0; i < graySquares.length; i++) {
+        graySquares[i].className = "gray";
+    }
+    bluePieces[index2].div.className = "selected piece-blue";
+
+    if (bluePieces[index2].king) {
+
+    }
+    else {
+        console.log(bluePieces[index2]);
+
+        let canRight = true;
+        let canLeft = true;
+        let leftMultiple = 1;
+        let rightMultiple = 1;
+        for (let i = 0; i < orangePieces.length; i++) {
+            if (orangePieces[i].index === bluePieces[index2].index + 7) {
+                for (let j = 0; j < orangePieces.length; j++) {
+                    if (orangePieces[j].index === bluePieces[index2].index + 14) {
+                        canRight = false;
+                    }
+                    else {
+                        rightMultiple = 2;
+                    }
+                }
+                for (let k = 0; k < bluePieces.length; k++) {
+                    if (bluePieces[k].index === bluePieces[index2].index + 14) {
+                        canRight = false;
+                        rightMultiple = 1;
+                    }
+                }
+            }
+            if (orangePieces[i].index === bluePieces[index2].index + 9) {
+                for (let j = 0; j < orangePieces.length; j++) {
+                    if (orangePieces[j].index === bluePieces[index2].index + 18) {
+                        canLeft = false;
+                    }
+                    else {
+                        leftMultiple = 2;
+                    }
+                }
+                for (let k = 0; k < bluePieces.length; k++) {
+                    if (bluePieces[k].index === bluePieces[index2].index + 18) {
+                        canLeft = false;
+                        leftMultiple = 1;
+                    }
+                }
+            }
+        }
+        for (let i = 0; i < bluePieces.length; i++) {
+            if (bluePieces[i].index === bluePieces[index2].index + 7) {
+                canRight = false;
+            }
+            if (bluePieces[i].index === bluePieces[index2].index + 9) {
+                canLeft = false;
+            }
+        }
+
+        if (boardArray[bluePieces[index2].index + (7 * rightMultiple)] !== "" && canRight) {
+            boardArray[bluePieces[index2].index + (7 * rightMultiple)].className = "highlighted gray";
+        }
+        if (boardArray[bluePieces[index2].index + (9 * leftMultiple)] !== "" && canLeft) {
+            boardArray[bluePieces[index2].index + (9 * leftMultiple)].className = "highlighted gray";
+        }
+
+        for (let i = 0; i < boardArray.length; i++) {
+            boardArray[i].onclick = undefined;
+        }
+
+        if (canRight) {
+            boardArray[bluePieces[index2].index + (7 * rightMultiple)].onclick = function() {
+                console.log("right");
+
+                boardArray[bluePieces[index2].index + (7 * rightMultiple)].onclick = undefined;
+                boardArray[bluePieces[index2].index + (9 * leftMultiple)].onclick = undefined;
+
+                if (boardArray[bluePieces[index2].index + (7 * rightMultiple)] !== "") {
+                    boardArray[bluePieces[index2].index + (7 * rightMultiple)].className = "gray";
+                }
+                if (boardArray[bluePieces[index2].index + (9 * leftMultiple)] !== "") {
+                    boardArray[bluePieces[index2].index + (9 * leftMultiple)].className = "gray";
+                }
+                bluePieces[index2].div.className = "piece-blue";
+
+                boardArray[bluePieces[index2].index + (7 * rightMultiple)].append(bluePieces[index2].div);
+
+                if (rightMultiple === 2) {
+                    for (let i = 0; i < orangePieces.length; i++) {
+                        if (orangePieces[i].index === bluePieces[index2].index + 7) {
+                            orangePieces[i].div.remove();
+                            orangePieces.splice(i, 1);
+                        }
+                    }
+                }
+
+                bluePieces[index2].index += (7 * rightMultiple);
+
+                turn = "orange";
+                //document.getElementById("turn").innerHTML = turn;
+            }
+        }
+
+        if (canLeft) {
+            boardArray[bluePieces[index2].index + (9 * leftMultiple)].onclick = function() {
+                console.log("left");
+
+                boardArray[bluePieces[index2].index + (7 * rightMultiple)].onclick = undefined;
+                boardArray[bluePieces[index2].index + (9 * leftMultiple)].onclick = undefined;
+
+                if (boardArray[bluePieces[index2].index + (7 * rightMultiple)] !== "") {
+                    boardArray[bluePieces[index2].index + (7 * rightMultiple)].className = "gray";
+                }
+                if (boardArray[bluePieces[index2].index + (9 * leftMultiple)] !== "") {
+                    boardArray[bluePieces[index2].index + (9 * leftMultiple)].className = "gray";
+                }
+                bluePieces[index2].div.className = "piece-blue";
+
+                boardArray[bluePieces[index2].index + (9 * leftMultiple)].append(bluePieces[index2].div);
+
+                if (leftMultiple === 2) {
+                    for (let i = 0; i < orangePieces.length; i++) {
+                        if (orangePieces[i].index === bluePieces[index2].index + 9) {
+                            orangePieces[i].div.remove();
+                            orangePieces.splice(i, 1);
+                        }
+                    }
+                }
+
+                bluePieces[index2].index += (9 * leftMultiple);
+
+                turn = "orange";
+                //document.getElementById("turn").innerHTML = turn;
+            }
+        }
+    }
 }
 
