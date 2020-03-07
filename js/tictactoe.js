@@ -74,7 +74,6 @@ function init(e) {
       squares[i].className = "square";
     }
   }
-
   render(); 
 }
 
