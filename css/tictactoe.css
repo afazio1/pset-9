@@ -1,3 +1,19 @@
+@font-face {
+  font-family: 'PressStart2P';
+  src: url("css/PressStart2P.ttf");
+}
+td {
+  font-family: 'PressStart2P';
+  background-color: rgba(15, 13, 11, 0.58);
+  padding: 15px;
+}
+a {
+  text-decoration: none;
+  color: lime;
+}
+a:hover {
+  color: white;
+}
 /*
  * Sets the overall styles for the page. There aren't many. All text
  * is centered, and the font is a monospaced Roboto (from Google).
@@ -182,3 +198,4 @@ span {
 .more-hidden {
   display: none;
 }
+

@@ -31,13 +31,24 @@ const hardText = document.querySelector("h3");
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
-window.onload = init;
+window.onload = startup;
 document.getElementById("board").onclick = takeTurn;
 document.getElementById("reset-button").onclick = init;
 document.getElementById("easy").onclick = easy;
 document.getElementById("hard").onclick = hard;
 
 ///////////////////// FUNCTIONS /////////////////////////////////////
+async function startup() {
+  font = new FontFace(
+    "PressStart2P",
+    "url(css/PressStart2P.ttf)"
+  );
+
+  await font.load();
+  document.fonts.add(font);
+
+  init();
+}
 
 function init(e) {
   board = [

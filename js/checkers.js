@@ -240,7 +240,7 @@ function moveOrangePiece(index) {
             }
         }
 
-        if (canLeft && oranges[index].index - (9 * leftMultiple) >= 0) {
+        if (canLeft && orangePieces[index].index - (9 * leftMultiple) >= 0) {
             boardArray[orangePieces[index].index - (9 * leftMultiple)].onclick = function() {
                 console.log("left");
 
@@ -340,11 +340,16 @@ function moveBluePiece(index2) {
                 canLeft = false;
             }
         }
+        /*
+        if (boardArray[orangePieces[index].index - (7 * rightMultiple)] !== "" && canRight && orangePieces[index].index - (7 * rightMultiple) >= 0) {
+            console.log(boardArray[orangePieces[index].index - (7 * rightMultiple)]);
+            boardArray[orangePieces[index].index - (7 * rightMultiple)].className = "highlighted gray";
+        }*/
 
-        if (boardArray[bluePieces[index2].index + (7 * rightMultiple)] !== "" && canRight) {
+        if (boardArray[bluePieces[index2].index + (7 * rightMultiple)] !== "" && canRight && bluePieces[index2].index + (7 * rightMultiple) >= 0) {
             boardArray[bluePieces[index2].index + (7 * rightMultiple)].className = "highlighted gray";
         }
-        if (boardArray[bluePieces[index2].index + (9 * leftMultiple)] !== "" && canLeft) {
+        if (boardArray[bluePieces[index2].index + (9 * leftMultiple)] !== "" && canLeft && bluePieces[index2].index + (9 * leftMultiple) >= 0) {
             boardArray[bluePieces[index2].index + (9 * leftMultiple)].className = "highlighted gray";
         }
 
@@ -359,10 +364,10 @@ function moveBluePiece(index2) {
                 boardArray[bluePieces[index2].index + (7 * rightMultiple)].onclick = undefined;
                 boardArray[bluePieces[index2].index + (9 * leftMultiple)].onclick = undefined;
 
-                if (boardArray[bluePieces[index2].index + (7 * rightMultiple)] !== "") {
+                if (boardArray[bluePieces[index2].index + (7 * rightMultiple)] !== "" && bluePieces[index2].index + (7 * rightMultiple) >= 0) {
                     boardArray[bluePieces[index2].index + (7 * rightMultiple)].className = "gray";
                 }
-                if (boardArray[bluePieces[index2].index + (9 * leftMultiple)] !== "") {
+                if (boardArray[bluePieces[index2].index + (9 * leftMultiple)] !== "" && bluePieces[index2].index + (9 * rightMultiple) >= 0) {
                     boardArray[bluePieces[index2].index + (9 * leftMultiple)].className = "gray";
                 }
                 bluePieces[index2].div.className = "piece-blue";
@@ -392,10 +397,10 @@ function moveBluePiece(index2) {
                 boardArray[bluePieces[index2].index + (7 * rightMultiple)].onclick = undefined;
                 boardArray[bluePieces[index2].index + (9 * leftMultiple)].onclick = undefined;
 
-                if (boardArray[bluePieces[index2].index + (7 * rightMultiple)] !== "") {
+                if (boardArray[bluePieces[index2].index + (7 * rightMultiple)] !== "" && bluePieces[index2].index + (7 * rightMultiple) >= 0) {
                     boardArray[bluePieces[index2].index + (7 * rightMultiple)].className = "gray";
                 }
-                if (boardArray[bluePieces[index2].index + (9 * leftMultiple)] !== "") {
+                if (boardArray[bluePieces[index2].index + (9 * leftMultiple)] !== "" && bluePieces[index2].index + (7 * rightMultiple) >= 0) {
                     boardArray[bluePieces[index2].index + (9 * leftMultiple)].className = "gray";
                 }
                 bluePieces[index2].div.className = "piece-blue";

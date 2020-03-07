@@ -69,14 +69,13 @@ h1 {
 td {
 	font-family: 'PressStart2P';
 	background-color: rgba(15, 13, 11, 0.58);
+	padding: 15px;
 }
 a {
 	text-decoration: none;
 	color: lime;
-	background-color: "transparent";
 }
-td:hover {
-	background-color: rgba(193, 236, 194, 0.57);
-	color: lime;
-	padding: 15px;
+a:hover {
+	color: white;
 }
+
