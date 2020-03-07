@@ -141,6 +141,8 @@ function moveOrangePiece(index) {
         let leftMultiple = 1;
         let rightMultiple = 1;
         for (let i = 0; i < orangePieces.length; i++) {
+            
+
             if (orangePieces[i].index === orangePieces[index].index - 7) {
                 canRight = false;
 
@@ -153,10 +155,9 @@ function moveOrangePiece(index) {
         for (let i = 0; i < bluePieces.length; i++) {
         	
             if (bluePieces[i].index === orangePieces[index].index - 7) {
-            	console.log("why");
+            	
                 for (let j = 0; j < bluePieces.length; j++) {
-                	//console.log(bluePieces[j]);
-                	//console.log(orangePieces[index]);
+                	
                     if (bluePieces[j].index === orangePieces[index].index - 14) {
                         canRight = false;
                         
@@ -190,11 +191,13 @@ function moveOrangePiece(index) {
                 }
             }
         }
-
-        if (boardArray[orangePieces[index].index - (7 * rightMultiple)] !== "" && canRight) {
+        console.log(boardArray[orangePieces[index].index])
+        //left off here
+        if (boardArray[orangePieces[index].index - (7 * rightMultiple)] !== "" && canRight && orangePieces[index].index - (7 * rightMultiple) >= 0) {
+            console.log(boardArray[orangePieces[index].index - (7 * rightMultiple)]);
             boardArray[orangePieces[index].index - (7 * rightMultiple)].className = "highlighted gray";
         }
-        if (boardArray[orangePieces[index].index - (9 * leftMultiple)] !== "" && canLeft) {
+        if (boardArray[orangePieces[index].index - (9 * leftMultiple)] !== "" && canLeft && orangePieces[index].index - (9 * leftMultiple) >= 0) {
             boardArray[orangePieces[index].index - (9 * leftMultiple)].className = "highlighted gray";
         }
         //left of here
@@ -202,16 +205,19 @@ function moveOrangePiece(index) {
             boardArray[i].onclick = undefined;
         }
 
-        if (canRight) {
+        if (canRight && orangePieces[index].index - (7 * rightMultiple) >= 0) {
             boardArray[orangePieces[index].index - (7 * rightMultiple)].onclick = function() {
 
                 boardArray[orangePieces[index].index - (7 * rightMultiple)].onclick = undefined;
-                boardArray[orangePieces[index].index - (9 * leftMultiple)].onclick = undefined;
+                
+                if (orangePieces[index].index - (9 * leftMultiple) >= 0) {
+                    boardArray[orangePieces[index].index - (9 * leftMultiple)].onclick = undefined;
+                }
 
-                if (boardArray[orangePieces[index].index - (7 * rightMultiple)] !== "") {
+                if (boardArray[orangePieces[index].index - (7 * rightMultiple)] !== "" && orangePieces[index].index - (7 * rightMultiple) >= 0) {
                     boardArray[orangePieces[index].index - (7 * rightMultiple)].className = "gray";
                 }
-                if (boardArray[orangePieces[index].index - (9 * leftMultiple)] !== "") {
+                if (boardArray[orangePieces[index].index - (9 * leftMultiple)] !== "" && orangePieces[index].index - (9 * leftMultiple) >= 0) {
                     boardArray[orangePieces[index].index - (9 * leftMultiple)].className = "gray";
                 }
                 orangePieces[index].div.className = "piece-orange";
@@ -234,17 +240,20 @@ function moveOrangePiece(index) {
             }
         }
 
-        if (canLeft) {
+        if (canLeft && oranges[index].index - (9 * leftMultiple) >= 0) {
             boardArray[orangePieces[index].index - (9 * leftMultiple)].onclick = function() {
                 console.log("left");
 
-                boardArray[orangePieces[index].index - (7 * rightMultiple)].onclick = undefined;
+                if (orangePieces[index].index - (7 * rightMultiple) >= 0) {
+                    boardArray[orangePieces[index].index - (7 * rightMultiple)].onclick = undefined;
+                }
+
                 boardArray[orangePieces[index].index - (9 * leftMultiple)].onclick = undefined;
 
-                if (boardArray[orangePieces[index].index - (7 * rightMultiple)] !== "") {
+                if (boardArray[orangePieces[index].index - (7 * rightMultiple)] !== "" && orangePieces[index].index - (7 * rightMultiple) >= 0) {
                     boardArray[orangePieces[index].index - (7 * rightMultiple)].className = "gray";
                 }
-                if (boardArray[orangePieces[index].index - (9 * leftMultiple)] !== "") {
+                if (boardArray[orangePieces[index].index - (9 * leftMultiple)] !== "" && orangePieces[index].index - (9 * leftMultiple) >= 0) {
                     boardArray[orangePieces[index].index - (9 * leftMultiple)].className = "gray";
                 }
                 orangePieces[index].div.className = "piece-orange";
