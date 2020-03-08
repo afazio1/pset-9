@@ -1,169 +1,109 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Checkers</title>
-	<link rel="stylesheet" type="text/css" href="css/checkers.css">
-	<script defer type="text/javascript" src="js/checkers.js"></script>
-	<script type="text/javascript" src="js/paper-full.js"></script>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link href="css/checkers.css.css" rel="stylesheet" type="text/css" />
+    <script defer src="js/checkers.js"></script><!--change file names later-->
+
+    <title>Checkers</title>
+    <script type="text/javascript" src="js/paper-full.js"></script>
     <script type="text/paperscript" canvas="canvas">
-	    // The amount of symbol we want to place;
-	    var count = 150;
+      // The amount of symbol we want to place;
+      var count = 150;
 
-	    project.currentStyle = {
-	        fillColor: 'lime'
-	    };
+      project.currentStyle = {
+          fillColor: 'lime'
+      };
 
-	    // Place the instances of the symbol:
-	    for (var i = 0; i < count; i++) {
-	        // The center position is a random point in the view:
-	        var center = Point.random() * view.size;
-	        var scale = (i + 1) / count;
-	        var path = new Shape.Circle(center, 5 * scale);
-	        path.data.vector = new Point({
-	            angle: Math.random() * 360,
-	            length : scale * Math.random() / 5
-	        });
-	    }
+      // Place the instances of the symbol:
+      for (var i = 0; i < count; i++) {
+          // The center position is a random point in the view:
+          var center = Point.random() * view.size;
+          var scale = (i + 1) / count;
+          var path = new Shape.Circle(center, 5 * scale);
+          path.data.vector = new Point({
+              angle: Math.random() * 360,
+              length : scale * Math.random() / 5
+          });
+      }
 
-	    var vector = new Point({
-	        angle: 45,
-	        length: 0
-	    });
+      var vector = new Point({
+          angle: 45,
+          length: 0
+      });
 
-	    var mouseVector = vector.clone();
+      var mouseVector = vector.clone();
 
-	    //function onMouseMove(event) {
-	    //    mouseVector = view.center - event.point;
-	    //}
+      //function onMouseMove(event) {
+      //    mouseVector = view.center - event.point;
+      //}
 
-	    // The onFrame function is called up to 60 times a second:
-	    function onFrame(event) {
-	        vector = vector + (mouseVector - vector) / 30;
+      // The onFrame function is called up to 60 times a second:
+      function onFrame(event) {
+          vector = vector + (mouseVector - vector) / 30;
 
-	        // Run through the active layer's children list and change
-	        // the position of the placed symbols:
-	        for (var i = 0; i < count; i++) {
-	            var item = project.activeLayer.children[i];
-	            var size = item.bounds.size;
-	            var length = vector.length / 10 * size.width / 10;
-	            item.position += vector.normalize(length) + item.data.vector;
-	            keepInView(item);
-	        }
-	    }
+          // Run through the active layer's children list and change
+          // the position of the placed symbols:
+          for (var i = 0; i < count; i++) {
+              var item = project.activeLayer.children[i];
+              var size = item.bounds.size;
+              var length = vector.length / 10 * size.width / 10;
+              item.position += vector.normalize(length) + item.data.vector;
+              keepInView(item);
+          }
+      }
 
-	    function keepInView(item) {
-	        var position = item.position;
-	        var itemBounds = item.bounds;
-	        var bounds = view.bounds;
-	        if (itemBounds.left > bounds.width) {
-	            position.x = -item.bounds.width;
-	        }
+      function keepInView(item) {
+          var position = item.position;
+          var itemBounds = item.bounds;
+          var bounds = view.bounds;
+          if (itemBounds.left > bounds.width) {
+              position.x = -item.bounds.width;
+          }
 
-	        if (position.x < -itemBounds.width) {
-	            position.x = bounds.width + itemBounds.width;
-	        }
+          if (position.x < -itemBounds.width) {
+              position.x = bounds.width + itemBounds.width;
+          }
 
-	        if (itemBounds.top > view.size.height) {
-	            position.y = -itemBounds.height;
-	        }
+          if (itemBounds.top > view.size.height) {
+              position.y = -itemBounds.height;
+          }
 
-	        if (position.y < -itemBounds.height) {
-	            position.y = bounds.height  + itemBounds.height / 2;
-	        }
-	    }
+          if (position.y < -itemBounds.height) {
+              position.y = bounds.height  + itemBounds.height / 2;
+          }
+      }
     </script>
-</head>
+  </head>
 <body>
-	<!--nav bar-->
-	<table id="navbar">
-		<td id="nav"><a href="index.html">Home</a></td>
-		<td id="nav"><a href="tictactoe.html">Tic Tac Toe</a></td>
-		<td id="nav"><a href="brickbreaker.html">Brick Breaker</a></td>
-		<td id="nav"><a href="checkers.html">Checkers</a></td>
-	</table>
-	<h1>Checkers</h1>
-	<table id="table">
-		<tr>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td class="gray"></div></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-		</tr>
-		<tr>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-		</tr>
-		<tr>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-		</tr>
-		<tr>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></td>
-			<td></td>
-			<td class="gray"></div></td>
-			<td></td>
-			<td class="gray"></td>
-		</tr>
-	</table>
-	<canvas id="canvas" resize hidpi="off" style="background:black"></canvas>
+<!--nav bar-->
+  <table id="navbar">
+    <td id="nav"><a href="index.html">Home</a></td>
+    <td id="nav"><a href="tictactoe.html">Tic Tac Toe</a></td>
+    <td id="nav"><a href="brickbreaker.html">Brick Breaker</a></td>
+    <td id="nav"><a href="checkers.html">Checkers</a></td>
+  </table>
+  <div id="div1" align=center>
+    <h1>Checkers</h1>
+
+    <div class="bigdiv">
+      <h2 id="h2"></h2>
+          
+      <div id="mainChessBoard" class="class">
+      </div>
+          
+      <div id = "buttons">
+        <div id="reset-button">Play Again</div>
+      </div>
+
+    </div>
+    <canvas id="canvas" resize hidpi="off" style="background:black"></canvas>
+  </div>
+  
 </body>
+
 </html>
