@@ -1,69 +1,187 @@
 @font-face {
-	font-family: 'PressStart2P';
-	src: url("PressStart2P.ttf");
+  font-family: 'PressStart2P';
+  src: url("PressStart2P.ttf");
 }
 * {
-	font-family: "PressStart2P";
+  font-family: "PressStart2P";
+  padding: 0;
+  margin: 0;
 }
-#table {
-	z-index: 2;
-	position: absolute;
-	margin-top: 5%;
-    margin-left: 25%;
+body {
+  text-align: center;
+  margin-right:auto;
+  margin-left: auto;
+  z-index: 2;
+  position: absolute;
 }
-#table td {
-	padding: 0;
-	margin: 0;
-	width: 75px;
-	height: 75px;
+#nav {
+  font-family: 'PressStart2P';
+  background-color: rgba(15, 13, 11, 0.58);
+  padding: 15px;
+  z-index: 2;
 }
-.piece-blue {
-	margin: auto;
-	border-radius: 50px;
-	width: 70px;
-	height: 70px;
-	background-color: #50EEAF;
+.squire
+{
+ width:60px;
+ height:60px;
+ float:left;
+ font-size: 60px;
+ z-index: 2;
+
 }
 
-.piece-orange {
-	margin: auto;
-	border-radius: 50px;
-	width: 70px;
-	height: 70px;
+div.bluecircle {
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: #50EEAF;
+    width: 60px; 
+    height: 60px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    font-size: 30px;
+    text-align: center;
+    margin: auto;
+    color: black;
+    z-index: 2;
+ 
+ }
+
+ div.orangecircle {
+    border: 2px solid black;
+    border-radius: 50%;
 	background-color: #FFC300;
+    width: 60px; 
+    height: 60px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+	color: red;
+	font-size: 45px;
+  z-index: 2;
+  
+ }
+ 
+#mainChessBoard
+{
+    width:480px;
+    height:480px;
+    border:1px solid black;
+    z-index: 2;
+    position: absolute;
+    margin-top: 10%;
+    margin-left: 20%;
 }
-.gray {
-	background-color: gray;
+
+
+h1 {
+  font-size: 30px;
+  color: black;
+  z-index: 2;
+  margin-left: 10%;
+  padding: 10px;
+}
+
+
+h2 {
+  font-size: 15px;
+  padding: 10px;
+  margin-left: 10%;
+  color: lime;
+  z-index: 2;
+}
+
+h3 {
+  margin: 0 auto;
+  font-weight: lighter;
+  font-size: 20px;
+  text-decoration: underline;
+  z-index: 2;
+}
+
+h4 {
+  margin: 0 auto;
+  font-weight: bolder;
+  font-size: 20px;
+  z-index: 2;
+}
+
+.score {
+  display:inline-block;
+  width: 30%;
+  text-align: center;
+  z-index: 2;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.column {
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.wrap {
+  flex-wrap: wrap;
+  height: 396px;
+  width: 396px;
+  z-index: 2;
+}
+
+.square {
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  font-size: 130px;
+  height: 130px;
+  width: 130px;
+  line-height: 130px;
+  line-width: 130px;
+  user-select: none;
+  z-index: 2;
+}
+
+a {
+  text-decoration: none;
+  color: lime;
+  z-index: 2;
+}
+a:hover {
+  color: white;
+  z-index: 2;
+}
+.square:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+#reset-button, #start-turn {
+  background-color: white;
+  margin-left: 10%;
+  border: 1px solid black;
+  color: black;
+  font-size: 21px; 
+  text-align: center;
+  width: 300px;
+  padding: 10px;
+  z-index: 2;
+}
+
+
+#reset-button:hover, #start-turn:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  z-index: 2;
 }
 
 canvas {
-    width: 620px;
-    height: 620px;
+    width: 480px;
+    height: 480px;
     z-index: 1;
-    position: absolute;
-    margin-top: 5%;
-    margin-left: 25%;
-}
-.selected {
-	border: 2px solid black;
-}
-.highlighted {
-	background-color: yellow;
-	width: 70px;
-	height: 70px;
-}
-#nav {
-	font-family: 'PressStart2P';
-	background-color: rgba(15, 13, 11, 0.58);
-	padding: 15px;
-	z-index: 2;
-}
-a {
-	text-decoration: none;
-	color: lime;
-	z-index: 2;
-}
-a:hover {
-	color: white;
-	z-index: 2;
+    margin-left: 8%;
+    margin-top: 4%;
+    
 }
